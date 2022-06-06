@@ -239,6 +239,10 @@ a {
   height: 100%;
 }
 
+div#right-sidebar-news > article:nth-child(1) {
+  display: none;
+}
+
 #right-sidebar-news article img,
 #main-news article img {
   width: 100%;

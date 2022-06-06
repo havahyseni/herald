@@ -1,4 +1,4 @@
-const RSS_URL_Featured = `https://moxie.foxnews.com/feedburner/health.xml`;
+const RSS_URL_Featured = `https://moxie.foxnews.com/feedburner/world.xml`;
 
 fetch(RSS_URL_Featured)
   .then(response => response.text())
