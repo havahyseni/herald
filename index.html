@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Herald News</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+    <link rel="stylesheet" href="path/to/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500&amp;display=swap'>
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+    <script>
+        function rssticker(t) {
+            for (var a = 0; a < numeroposts; a++) {
+                entradas = t.feed.entry[a], titulosposts[a] = entradas.title.$t;
+                for (var e = 0; e < entradas.link.length; e++)
+                    if ("alternate" == entradas.link[e].rel) {
+                        enlaceposts[a] = entradas.link[e].href;
+                        break
+                    }
+            }
+            startrssticker()
+        }
+
+        function startrssticker() {
+            postactual = -1, largoactual = 0, enlaces = document.getElementById("enlace"), runticker()
+        }
+
+        function runticker() {
+            var t;
+            0 == largoactual && (postactual++, postactual %= numeroposts, titulo = titulosposts[postactual].replace(
+                    /&quot;/g, '"'), enlace = enlaceposts[postactual], enlaces.href = enlace), enlaces.innerHTML =
+                titulo.substring(0, largoactual), largoactual != titulo.length ? (largoactual++, t = retardocaracter) :
+                (largoactual = 0, t = retardopost), setTimeout("runticker()", t)
+        }
+        var numeroposts = 6; //Entradas a mostrar
+        var retardocaracter = 30; //Cadencia entre caracteres
+        var retardopost = 4000; //Cadencia entre entradas
+        var titulosposts = new Array();
+        var enlaceposts = new Array();
+        var entradas = "";
+    </script>
+
+    <div class="header">
+        <div class="header-inner">
+            <nav class="navbar navbar-expand-lg navbar-light ">
+                <div class="logo">
+                    <a class="navbar-brand" href="#"></a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#news-feed">Sport </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#healthNewsMain">Health </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#techNewsMain">Technology</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#latestNewsMain">Latest</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#footer">Contact</a>
+                        </li>
+
+                    </ul>
+
+                    <div class="social-header">
+                        <a class="social-header-i" href="https://www.facebook.com/ibuskopje/"><i class="fa fa-facebook"
+                                aria-hidden="true"></i></a>
+                        <a class="social-header-i" href="https://www.instagram.com/ibuskopje/?hl=en"><i
+                                class="fa fa-instagram" aria-hidden="true"></i></a>
+                        <a class="social-header-i" href="mailto:feng@ibu.edu.mk"><i class="fa fa-envelope-o"
+                                aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class='rssticker'>
+        <span class="encabezado">Live News</span>
+        <a id='enlace'></a>
+        <!-- Aqui la dirección del feed -->
+        <script src='http://www.oloblogger.com/feeds/posts/default?alt=json-in-script&callback=rssticker'
+            module='/text/javascript'></script>
+    </div>
+    <!-- partial:index.partial.html -->
+    <div id="app">
+        <div class="featured-news-outter">
+            <div class="featured-news">
+                <div class="featured-news-top">
+                    <h2 class="featured-news-title">Featured News</h2>
+                </div>
+                <div class="featured-news-bottom">
+                    <div class="featured-news-bottom-left">
+                        <div id="main-news" class="tabcontent" style="display: flex;"></div>
+                    </div>
+                    <div class="featured-news-bottom-right">
+                        <div id="right-sidebar-news" class="tabcontent" style="display: flex;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="news-feed-outter">
+            <div class="brand-sport">SPORT</div>
+            <h2 class="sport-news-headline">Sport News</h2>
+            <div id="news-feed">
+                <div class="tabcontent" style="display: flex;"></div>
+            </div>
+        </div>
+        <div class="health-news-outter">
+            <div id="healthNewsMain">
+                <div class="brand-health">HEALTH</div>
+                <h2 class="health-news-headline">Health News</h2>
+                <div id="healthNews">
+
+                </div>
+            </div>
+        </div>
+        <div class="tech-outter">
+            <div id="techNewsMain">
+                <div class="brand-tech">TECH</div>
+                <h2 class="tech-news-headline">Technology News</h2>
+                <div id="techNews">
+                </div>
+            </div>
+        </div>
+        <div class="latest-news-outter">
+            <div class="brand-latest">LATEST</div>
+            <h2 class="latest-news-headline">Latest News</h2>
+            <div id="latestNewsMain">
+                <div id="latestNews">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="brand">CONTACT</div>
+            <div class="left-right-footer">
+                <div class="left-footer">
+                    <div class="contact">
+                        <h2>HERALD NEWS</h2>
+                        <h2>heraldnews@mk.com</h2>
+                        <h2>+39 925 952</h2>
+                        <h2>90021 New York</h2>
+                    </div>
+                    <div class="contact-social">
+                        <a class="contact-social-i" href="https://www.facebook.com/ibuskopje/"><i class="fa fa-facebook"
+                                aria-hidden="true"></i></a>
+                        <a class="contact-social-i" href="https://www.instagram.com/ibuskopje/?hl=en"><i
+                                class="fa fa-instagram" aria-hidden="true"></i></a>
+                        <a class="contact-social-i" href="mailto:feng@ibu.edu.mk"><i class="fa fa-envelope-o"
+                                aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="right-footer">
+                    <iframe class="map"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2964.339399146134!2d21.427159915684825!3d42.01445096484884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13541579ad470e4f%3A0x68a9675e19015a7e!2sInternational%20Balkan%20University!5e0!3m2!1sen!2smk!4v1651853268764!5m2!1sen!2smk"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+            <div class="copyright">&copy; 2022 Hava Hyseni</div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- partial -->
+    <script src='https://unpkg.com/rss-parser@3.8.0/dist/rss-parser.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src='https://unpkg.com/vue@2.6.11/dist/vue.min.js'></script>
+    <script src="./script.js"></script>
+    <script src="./news-feeds/featured-news.js"></script>
+    <script src="./news-feeds/right-sidebar-news.js"></script>
+    <script src="./news-feeds/latest-news.js"></script>
+    <script src="./news-feeds/tech-news.js"></script>
+    <script src="./news-feeds/health-news.js"></script>
+    <script src="./news-feeds/sport-news.js"></script>
+
+</body>
+
+</html>
